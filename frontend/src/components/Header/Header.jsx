@@ -22,7 +22,7 @@ function Header() {
                             <Search/>
                         </NavLink>
                         <NavLink
-                            to="/account"
+                            to="/auth/signup"
                             className="text-[#737373]  focus:ring-gray-300 font-medium w-[35px] flex items-center justify-center  rounded-lg text-[14px] focus:outline-none px-1 py-1 mr-1"
                         >
                             <User />
@@ -78,7 +78,6 @@ function Header() {
 
             </div>
         </header>
-        <Hero/>
         </>
 
     )
