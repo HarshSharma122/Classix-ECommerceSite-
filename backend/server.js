@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDb from "./db/index.js";
+import authenticationRoutes from "./routes/AuthenticationRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config(); // for getting env data
 
@@ -20,6 +22,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use('/auth', authenticationRoutes);
+app.use("/productQuery", productRoutes);
 
 connectDb()
   .then(() => {
