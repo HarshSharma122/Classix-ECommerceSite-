@@ -1,16 +1,56 @@
 import React, { useState } from 'react'
 import signupImg from '../../../assets/authImg.jpg'
 import { NavLink } from 'react-router-dom'
-import { LogIn } from 'lucide-react'
-
+import apiClient from '../../../library/api_client'
+import { LOGIN_ROUTES } from '../../../util/constants.js'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+import { useAppStore } from '../../../store/index.js'
 
 function Login() {
+    const {setUserInfo}= useAppStore();
+
+    const navigate = useNavigate();
     const [Inputvalue, setInputValue] = useState({
-        name: "",
         email: "",
         password: "",
-        number: ""
     })
+    function validateLogin()
+    {
+        if(!Inputvalue.email.length)
+        {
+            toast.error("Email is required");
+            return false;
+        }
+        if(!Inputvalue.password.length)
+        {
+            toast.error("Password is Required");
+            return false;
+        }
+        return true;
+    }
+    const handleLogin = async ()=>
+    {
+        if(validateLogin())
+        {
+            const response = await apiClient.post(LOGIN_ROUTES, {
+                email:Inputvalue.email,
+                password:Inputvalue.password
+            }, {withCredentials:true})
+            console.log(response);
+            if(response.status ===  202)
+            {
+                setUserInfo(response.data.user)
+                navigate('/profile');
+            }
+        }
+    }
+
+
+
+
+
+
     const changeValue = (e) => {
         setInputValue({ ...Inputvalue, [e.target.name]: e.target.value })
     }
@@ -19,9 +59,9 @@ function Login() {
             <div className='flex-50   w-100 h-200'>
                 <img src={signupImg} className='w-[100%] h-[100%]' alt="" />
             </div>
-            <div className='flex-50 flex items-center justify-center w-100 h-200  h-[100vh]'>
+            <div className='flex-50 flex items-center justify-center w-100 h-[100vh]'>
                 <div className='items-center justify-center'>
-                    <h2 className='flex items-center justify-center text-3xl font-bold mb-1'>Signup</h2>
+                    <h2 className='flex items-center justify-center text-3xl font-bold mb-1'>Login</h2>
                     <div className='w-[34vw] h-[70vh] lg:w-[30vw] lg:h-[50vh]'>
 
                         <div className="grid grid-col-1 gap-x-5 gap-y-1">
@@ -59,7 +99,7 @@ function Login() {
                                 </div>
 
                             </div>
-                            <button className='bg-black text-white cursor-pointer rounded text-sm p-2 float-right mt-[20px] ml-[15px] w-[30vw] h-10'>Login</button>
+                            <button onClick={handleLogin} className='bg-black text-white cursor-pointer rounded text-sm p-2 float-right mt-[20px] ml-[15px] w-[30vw] h-10'>Login</button>
                            
 
                         </div>

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { genSalt, hash } from 'bcrypt'
 const userSchema = mongoose.Schema({
     username: {
@@ -11,10 +11,35 @@ const userSchema = mongoose.Schema({
       required: true,
       unique: true,
     },
+    address: {
+      type: String,
+      required: true,
+    },
+    number: {
+      type: String,
+      required: true,
+
+    },
+    city: {
+      type: String,
+      required:true
+    },
+    pincode: {
+      type: String,
+      required:true
+    },
+    country: {
+      type: String,
+      required:true
+    },
     password: {
       type: String,
       required: [true, "Password is Required"],
     },
+    addressBook:{
+      type:Schema.Types.ObjectId,
+      ref:"UserAddress",
+    }
   },
   { timestamps: true }
 );
@@ -25,4 +50,5 @@ userSchema.pre("save", async function(next)
     this.password = await hash(this.password, salt);
     next();
 })
-export default User = mongoose.model("Users", userSchema);
+const User = mongoose.model("Users", userSchema);
+export default User;

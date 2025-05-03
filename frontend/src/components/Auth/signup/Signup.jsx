@@ -2,15 +2,63 @@ import React, { useState } from 'react'
 import signupImg from '../../../assets/authImg.jpg'
 import { NavLink } from 'react-router-dom'
 import { LogIn } from 'lucide-react'
+import apiClient from '../../../library/api_client.js'
+import { SIGNUP_ROUTES } from '../../../util/constants.js'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+import { useAppStore } from '../../../store/index.js'
 
 
 function Signup() {
+    const navigate = useNavigate();
+    const {setUserInfo}= useAppStore();
     const [Inputvalue, setInputValue] = useState({
-        name: "",
+        username: "",
         email: "",
         password: "",
-        number: ""
     })
+    
+    const validateSignup = ()=>
+    {
+        if(!Inputvalue.username.length)
+        {
+            toast.error("Name is Required");
+            return false;
+        }
+        if(!Inputvalue.email.length)
+        {
+            toast.error("Email is Required");
+            return false;
+        }
+        if(!Inputvalue.password.length)
+        {
+            toast.error("Password is Required");
+            return false;
+        }
+        return true;
+    }
+
+    const handleSignup = async ()=>
+    {
+        if(validateSignup())
+        {
+            
+            const response  = await apiClient.post(SIGNUP_ROUTES,
+            {
+                username:Inputvalue.username,
+                email:Inputvalue.email,
+                password:Inputvalue.password
+            }, {withCredentials:true})
+
+            if(response.data.user.id)
+            {
+                setUserInfo(response.data.user);
+                navigate('/profile')
+            }
+            console.log(response);
+        }
+        
+    }
     const changeValue = (e) => {
         setInputValue({ ...Inputvalue, [e.target.name]: e.target.value })
     }
@@ -19,7 +67,7 @@ function Signup() {
             <div className='flex-50   w-100 h-200'>
                 <img src={signupImg} className='w-[100%] h-[100%]' alt="" />
             </div>
-            <div className='flex-50 flex items-center justify-center w-100 h-200  h-[100vh]'>
+            <div className='flex-50 flex items-center justify-center w-100 h-[100vh]'>
                 <div className='items-center justify-center'>
                     <h2 className='flex items-center justify-center text-3xl font-bold mb-1'>Signup</h2>
                     <div className='w-[34vw] h-[70vh] lg:w-[30vw] lg:h-[50vh]'>
@@ -29,7 +77,7 @@ function Signup() {
                                 <div className="mt-2.5">
                                     <input
                                         id="full-name"
-                                        name="name"
+                                        name="username"
                                         type="text"
                                         value={Inputvalue.name}
                                         onChange={changeValue}
@@ -72,7 +120,7 @@ function Signup() {
                                 </div>
 
                             </div>
-                            <button className='bg-black text-white cursor-pointer rounded text-sm p-2 float-right mt-[20px] ml-[15px] w-[30vw] h-10'>Create Account</button>
+                            <button onClick={handleSignup} className='bg-black text-white cursor-pointer rounded text-sm p-2 float-right mt-[20px] ml-[15px] w-[30vw] h-10'>Create Account</button>
                            
 
                         </div>
