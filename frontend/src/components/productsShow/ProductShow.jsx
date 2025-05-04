@@ -23,7 +23,7 @@ function ProductShow() {
     return (
         <div className='flex'>
             <div className='flex-[85%]'>
-                <div className='grid grid-cols-4 gap-1 z-0 mt-10 mr-1'>
+                <div className='grid grid-cols-2  lg:grid-cols-4 gap-1 z-0 mt-10 mr-1'>
                     {
                         value.map((ans) => (
                             <MenClothes product_id={ans._id} product_name={ans.ProductName} price={ans.ProductPrice} description={ans.ProductDesc} image={ans.ProductImg} />

@@ -33,7 +33,7 @@ function Profile() {
       </div>
 
       <div className='mt-8 lg:ml-60 flex flex-col ml-20 mb-50 mr-10'>
-        <div className='mt-10 grid md:grid-cols-3 grid-cols-2 gap-10 '>
+        <div className='mt-10 grid md:grid-cols-3 grid-cols-1 gap-10 '>
 
           {/* for orders components start here*/}
           <NavLink to='/profile/Orders'>

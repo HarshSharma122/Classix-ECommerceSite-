@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import CartContext from '../../../context/CartContext';
 import totalPriceContext from '../../../context/totalpriceContext/totalPrice';
+
 function MenClothes({ product_id, product_name, price, description, image }) {
     const { cartItem, setCartItem } = useContext(CartContext);
    const {totalPrice, settotalprice} = useContext(totalPriceContext);
@@ -10,7 +11,6 @@ function MenClothes({ product_id, product_name, price, description, image }) {
             product_id,
             product_name,
             price,
-            description,
             image,   
         }
         setCartItem([...cartItem, items])

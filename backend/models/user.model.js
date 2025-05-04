@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { genSalt, hash } from 'bcrypt'
-const userSchema = mongoose.Schema({
+import { genSalt, hash } from "bcrypt";
+const userSchema = mongoose.Schema(
+  {
     username: {
       type: String,
       required: true,
@@ -18,37 +19,43 @@ const userSchema = mongoose.Schema({
     number: {
       type: String,
       required: true,
-
     },
     city: {
       type: String,
-      required:true
+      required: true,
     },
     pincode: {
       type: String,
-      required:true
+      required: true,
     },
     country: {
       type: String,
-      required:true
+      required: true,
     },
     password: {
       type: String,
       required: [true, "Password is Required"],
     },
-    addressBook:{
-      type:Schema.Types.ObjectId,
-      ref:"UserAddress",
-    }
+    orders:[
+      {
+       product_name:String,
+       price:String,
+       image:String,
+       orderedAt:{
+        type:Date,
+        default:Date.now
+       },
+      }
+    ]
+   
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", async function(next)
-{
-    const salt = await genSalt();
-    this.password = await hash(this.password, salt);
-    next();
-})
+userSchema.pre("save", async function (next) {
+  const salt = await genSalt();
+  this.password = await hash(this.password, salt);
+  next();
+});
 const User = mongoose.model("Users", userSchema);
 export default User;

@@ -15,8 +15,8 @@ import {Link, NavLink} from 'react-router-dom';
 function Hero() {
     return (
         <div>
-            <div className="h-[600px] w-full bg-[#65503b]">
-                <img className=" opacity-[0.5] h-full w-full object-cover" src={heroimg} alt="Hero Image" />
+            <div className="h-[500px] md:h-[500px] w-full bg-[#65503b]">
+                <img className="opacity-[0.5] h-full w-full object-cover" src={heroimg} alt="Hero Image" />
             </div>
 
 
@@ -31,7 +31,7 @@ function Hero() {
             </div>
 
 
-            <div className='grid grid-flow-col grid-row-1'>
+            <div className='lg:grid grid-flow-col grid-row-1'>
                 <InfoFeatures img={pack} heading="Doorstep Delivery" subHeading="Free shipping within Singapore with no minimum purchase"/>
                 <InfoFeatures img={circle} heading="30 Days Exchange" subHeading="Exchange at any of our retail stores within 30 days from date of order placement"/>
                 <InfoFeatures img={leaf} heading="Consciously Crafted" subHeading="Designed with you and the planet in mind"/>

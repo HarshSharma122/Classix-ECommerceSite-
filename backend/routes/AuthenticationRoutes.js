@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUserInfo, login, signup, getuserAddress, DeleteToken } from "../controllers/authenticationController.js";
+import { getUserInfo, login, signup, getuserAddress, DeleteToken, orderplaced } from "../controllers/authenticationController.js";
 import { verifyToken } from "../middlewares/AuthMiddleWare.js";
 
 
@@ -10,5 +10,7 @@ authenticationRoutes.post("/login", login);
 authenticationRoutes.post('/userAddress',verifyToken, getuserAddress);
 authenticationRoutes.get('/userInfo', verifyToken, getUserInfo);
 authenticationRoutes.post('/deletetoken' ,DeleteToken)
+
+authenticationRoutes.post("/orderPlaced", orderplaced)
 
 export default authenticationRoutes;

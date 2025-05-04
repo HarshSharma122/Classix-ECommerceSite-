@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CartContext from '../../../context/CartContext'
 import totalPriceContext from '../../../context/totalpriceContext/totalPrice';
+import apiClient from '../../../library/api_client';
+import { PLACED_ITEM_ROUTES } from '../../../util/constants';
 function Cart() {
     const { cartItem, setCartItem } = useContext(CartContext)
     const { totalPrice, settotalprice } = useContext(totalPriceContext);
@@ -11,11 +13,24 @@ function Cart() {
         let remove = cartItem.splice(index, 1);
         setCartItem([...cartItem]);
         settotalprice(totalPrice - parseInt(cartItem[index].price))
-
+        console.log(totalPrice);
+    }
+    const orderplaced = async () => {
+        try{
+            const response = await apiClient.post(PLACED_ITEM_ROUTES, {
+                products: cartItem,
+            })
+            console.log(response);
+            
+        }catch(err)
+        {
+            console.error("Order failed");
+            
+        }
 
     }
     return (
-        <div className='flex mb-1'>
+        <div className='md:flex mb-1'>
             {
                 cartItem.length === 0 ? (
                     <div>
@@ -23,11 +38,11 @@ function Cart() {
                     </div>
                 ) : (
                     <>
-                        <div className='flex-[30%] w-[50%] '>
+                        <div className='lg:flex-[30%] flex-[40%] lg:w-[50%] w-[100%]'>
                             {
                                 cartItem.map((ans, index) => (
                                     <div className=" flex items-center justify-center mt-5">
-                                        <div className=" cursor-pointer bg-white product_boxes  ml-10 w-250 flex flex-col z-0">
+                                        <div className=" cursor-pointer bg-white product_boxes  ml-10 md:w-250  flex flex-col z-0">
                                             <div className="border-1">
                                                 <div className="cart__Details flex  pl-4 mb-7 mt-4">
                                                     <div className="img_section mr-4">
@@ -60,8 +75,8 @@ function Cart() {
 
                         </div>
 
-                        <div className="flex-[70%] ml-1">
-                            <div className="w-[25vw] border-1 items-center justify-center mt-5">
+                        <div className="lg:flex-[30%] flex-[10%] ml-1">
+                            <div className="lg:w-[25vw]  border-1 items-center justify-center mt-5">
                                 <div className=" p-5 cursor-pointer bg-white product_boxes  z-0">
                                     <h3 className='text-l font-bold'>Price Details</h3>
                                     {/* section start here */}
@@ -84,7 +99,7 @@ function Cart() {
 
 
 
-                                    <button className="text-sm rounded-lg text-white border-1 bg-black mb-1 mt-5  border-none w-50 h-8 cursor-pointer">
+                                    <button onClick={orderplaced} className="text-sm rounded-lg text-white border-1 bg-black mb-1 mt-5  border-none w-50 h-8 cursor-pointer">
                                         Place Order
                                     </button>
 

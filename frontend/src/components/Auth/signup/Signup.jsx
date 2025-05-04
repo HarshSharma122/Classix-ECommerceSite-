@@ -64,13 +64,13 @@ function Signup() {
     }
     return (
         <div className='flex'>
-            <div className='flex-50   w-100 h-200'>
+            <div className='flex-50 lg:block md:block hidden  w-100 h-200'>
                 <img src={signupImg} className='w-[100%] h-[100%]' alt="" />
             </div>
             <div className='flex-50 flex items-center justify-center w-100 h-[100vh]'>
                 <div className='items-center justify-center'>
-                    <h2 className='flex items-center justify-center text-3xl font-bold mb-1'>Signup</h2>
-                    <div className='w-[34vw] h-[70vh] lg:w-[30vw] lg:h-[50vh]'>
+                    <h2 className='lg:flex items-center justify-center text-3xl font-bold mb-1'>Signup</h2>
+                    <div className='md:w-[100vw] w-[60vw] h-[70vh] lg:w-[30vw] lg:h-[50vh]'>
 
                         <div className="grid grid-col-1 gap-x-5 gap-y-1">
                             <div className='sm:col-span-2'>

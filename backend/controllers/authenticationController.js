@@ -123,14 +123,30 @@ export const getUserInfo = async (req, res, next) => {
   }
 };
 
-export const DeleteToken = async (req,res, next)=>
-{
-  try{
-    res.cookie("token", "", {maxAge:1, secure:true, sameSite:"none"})
+export const DeleteToken = async (req, res, next) => {
+  try {
+    res.cookie("token", "", { maxAge: 1, secure: true, sameSite: "none" });
     return res.status(200).send("logout succeesfull");
+  } catch (error) {
+    return res.status(500).send("Internals server eoror");
+  }
+};
 
-  }catch(error)
-{
-  return res.status(500).send("Internals server eoror");
-}
-}
+export const orderplaced = async (req, res, next) => {
+  try {
+    const { products } = req.body;
+    const userId = req.userId;
+
+    const update = await User.findByIdAndUpdate(userId, { products });
+
+    if (!update) return res.status(404).json({ message: "user not found" });
+
+    update.orders.push(...products);
+    await update.save();
+    return res
+      .status(200)
+      .json({ message: "Order placed successfully", orders: update.orders });
+  } catch (err) {
+    console.error(err);
+  }
+};
