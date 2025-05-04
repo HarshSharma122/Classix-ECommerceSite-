@@ -9,6 +9,7 @@ import InfoFeatures from '../Features/infoFeatures'
 import circle from '../../assets/bx-circle-three-quarter.svg'
 import leaf from '../../assets/bx-leaf.svg'
 import pack from '../../assets/bx-package.svg'
+import {Link, NavLink} from 'react-router-dom';
 
 
 function Hero() {
@@ -20,7 +21,10 @@ function Hero() {
 
 
             <div className="grid grid-flow-col grid-rows-2">
-                <SectionFeatures name="Men" img={menImg}/>
+                <NavLink to='/menClothes'>
+                    <SectionFeatures name="Men" img={menImg}/>
+                </NavLink>
+            
                 <SectionFeatures name="child" img={childImg}/>
                 <SectionFeatures name="Women" img={womenImg}/>
                 <SectionFeatures name="Accessories" img={acccImg}/>

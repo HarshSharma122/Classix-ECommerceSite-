@@ -2,8 +2,14 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Search, SearchIcon, ShoppingCart, User } from 'lucide-react'
 import Hero from '../Hero/Hero'
+import { useContext } from 'react'
+import CartContext from '../../context/CartContext'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+    const navigate = useNavigate();
+    const {cartItem} = useContext(CartContext);
+
 
     return (
         <>
@@ -29,13 +35,12 @@ function Header() {
                         </NavLink>
                         
                         <NavLink
-                            to="/cartItem"
+                            to="/product/cart"
                             className="flex items-center justify-center  text-[#737373]  focus:ring-gray-300 font-medium  rounded-lg text-sm px-4 lg:px-1 py-2 lg:py-2.5 mr-1 focus:outline-none">
                             {/* <img className="w-9"  alt="" /> */}
                             <div className="flex items-center flex-col">
-                                <span className='leading-1'>3</span>
+                                <span className='leading-1'>{cartItem?.length}</span>
                                 <ShoppingCart />
-                                {/* <h1 className="ml-1 text-l">Cart</h1> */}
                             </div>
                         </NavLink>
                     </div>
@@ -45,7 +50,7 @@ function Header() {
                         <ul className="flex ml-6 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                             <li>
                                 <NavLink
-                                    to="/"
+                                    to="/menClothes"
                                     className={`text-[#737373] block py-2 pr-1 pl-2 duration-200 text-base border-b border-gray-100 lg:hover:bg-transparent lg:border-0 hover:text-zinc-400 lg:p-0 font-bold`
                                     }
                                 >

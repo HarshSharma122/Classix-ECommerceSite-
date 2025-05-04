@@ -10,6 +10,11 @@ import Profile from './components/Profile/Profile.jsx'
 import { useAppStore } from './store/index.js'
 import Address from './components/Profile/Address.jsx'
 import Orders from './components/Profile/Orders.jsx'
+import MenClothes from './components/productsShow/productCategory/MenClothes.jsx'
+import ProductShow from './components/productsShow/ProductShow.jsx'
+import CartContextProvider from './context/CartContextProvider.jsx'
+import Cart from './components/productsShow/cart/Cart.jsx'
+import TotalPriceProvider from './context/totalpriceContext/totalPriceProvider.jsx'
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useAppStore();
 
@@ -63,8 +68,15 @@ const router = createBrowserRouter([
       {
         path: '/profile/Orders',
         element: <Orders />
+      },
+      {
+        path: "/MenClothes",
+        element: <ProductShow />
+      },
+      {
+        path: "/product/cart",
+        element: <Cart />
       }
-
 
 
 
@@ -75,5 +87,10 @@ const router = createBrowserRouter([
 
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <CartContextProvider>
+    <TotalPriceProvider>
+      <RouterProvider router={router} />
+
+    </TotalPriceProvider>
+  </CartContextProvider>
 )
