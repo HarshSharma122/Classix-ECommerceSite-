@@ -2,37 +2,54 @@ import React, { useContext, useEffect, useState } from 'react'
 import CartContext from '../../../context/CartContext'
 import totalPriceContext from '../../../context/totalpriceContext/totalPrice';
 import apiClient from '../../../library/api_client';
+import {useNavigate} from 'react-router-dom';
 import { PLACED_ITEM_ROUTES } from '../../../util/constants';
+import Preloader from '../../Preloader/Preloader';
 function Cart() {
+    const navigate = useNavigate();
     const { cartItem, setCartItem } = useContext(CartContext)
     const { totalPrice, settotalprice } = useContext(totalPriceContext);
-
+    const[message, showMessage] = useState(false);
+    const[stop, setstop] = useState(true);
 
 
     const removeItem = (index) => {
+        if(totalPrice>0){
+            settotalprice(totalPrice - parseInt(cartItem[index].price))
+        }
         let remove = cartItem.splice(index, 1);
         setCartItem([...cartItem]);
-        settotalprice(totalPrice - parseInt(cartItem[index].price))
-        console.log(totalPrice);
-    }
+        
+    } 
     const orderplaced = async () => {
         try{
             const response = await apiClient.post(PLACED_ITEM_ROUTES, {
-                products: cartItem,
-            })
-            console.log(response);
+                productsharsh: cartItem,
+            }, {withCredentials:true})
             
+
+            if(response.status===200)
+            {
+                showMessage(true);
+                setstop(false);
+                setTimeout(()=>
+                {
+                    navigate("/profile/Orders");
+                },4000)
+                setCartItem([]);
+                settotalprice(0);
+
+            }
         }catch(err)
         {
             console.error("Order failed");
             
         }
-
     }
     return (
         <div className='md:flex mb-1'>
-            {
-                cartItem.length === 0 ? (
+            { stop&&(
+                 cartItem.length === 0 ? (
                     <div>
                         <h2 className='text-xl text-center pt-10 font-medium '>Your cart is empty</h2>
                     </div>
@@ -108,6 +125,11 @@ function Cart() {
                         </div>
                     </>
                 )
+            )    
+            }
+            {
+                
+                message&&<Preloader/>
             }
 
 

@@ -11,6 +11,6 @@ authenticationRoutes.post('/userAddress',verifyToken, getuserAddress);
 authenticationRoutes.get('/userInfo', verifyToken, getUserInfo);
 authenticationRoutes.post('/deletetoken' ,DeleteToken)
 
-authenticationRoutes.post("/orderPlaced", orderplaced)
+authenticationRoutes.post("/orderPlaced", verifyToken, orderplaced)
 
 export default authenticationRoutes;

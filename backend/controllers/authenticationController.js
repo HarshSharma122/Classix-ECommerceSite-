@@ -24,6 +24,7 @@ export const signup = async (req, res, next) => {
         username: user.username,
         id: user._id,
         email: user.email,
+
       },
     });
   } catch (error) {
@@ -131,21 +132,28 @@ export const DeleteToken = async (req, res, next) => {
     return res.status(500).send("Internals server eoror");
   }
 };
-
 export const orderplaced = async (req, res, next) => {
   try {
-    const { products } = req.body;
+    
+    const { productsharsh} = req.body;
     const userId = req.userId;
-
-    const update = await User.findByIdAndUpdate(userId, { products });
-
+    const update = await User.findById(userId);
     if (!update) return res.status(404).json({ message: "user not found" });
+    const newOrders = productsharsh.map(product=>({
+      product_name:product.product_name,
+      price:product.price,
+      image:product.image,
+      orderedAt:new Date()
+    }));
 
-    update.orders.push(...products);
-    await update.save();
-    return res
-      .status(200)
-      .json({ message: "Order placed successfully", orders: update.orders });
+
+
+    update.orders.push(...newOrders);
+    const updatedUser = await update.save();
+    return res.status(200).json({
+      message: "Order placed successfully",
+      orders: updatedUser.orders,
+    });
   } catch (err) {
     console.error(err);
   }

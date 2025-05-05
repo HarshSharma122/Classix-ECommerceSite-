@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import totalPriceContext from "./totalPrice";
-
-const TotalPriceProvider = ({children}) =>
-    {
-    const [totalPrice, settotalprice] = useState(0);
-   
-    
-    // useEffect(()=>{
-    //     localStorage.setItem("items", JSON.stringify(cartItem));
-    // },[cartItem])
-
+import useStorageHook from "../../CustomHook/CustomHook";
+const TotalPriceProvider = ({ children }) => {
+    const [totalPrice, settotalprice] = useState(() => {
+        let value = localStorage.getItem("TotalPrice");
+        let data;
+        if (value) {
+            data = JSON.parse(value);
+        }
+        else {
+            data = 0;
+        }
+        return data;
+    });
+    useEffect(() => {
+        localStorage.setItem("TotalPrice", JSON.stringify(totalPrice));
+    }, [totalPrice])
     return (
-        <totalPriceContext.Provider value={{totalPrice, settotalprice}}>
+        <totalPriceContext.Provider value={{ totalPrice, settotalprice }}>
             {children}
         </totalPriceContext.Provider>
-        
+
     )
 }
 export default TotalPriceProvider;

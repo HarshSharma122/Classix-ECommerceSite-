@@ -60,10 +60,10 @@ const Address = () => {
                     pincode: Inputvalue.pincode,
                     country: Inputvalue.country
                 }, { withCredentials: true })
-
+            console.log(response);
+                
         }
     }
-
     return (
         <>
 

@@ -15,7 +15,7 @@ import {Link, NavLink} from 'react-router-dom';
 function Hero() {
     return (
         <div>
-            <div className="h-[500px] md:h-[500px] w-full bg-[#65503b]">
+            <div className="h-[500px] md:h-[600px] w-full bg-[#65503b]">
                 <img className="opacity-[0.5] h-full w-full object-cover" src={heroimg} alt="Hero Image" />
             </div>
 

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, {Schema } from "mongoose";
 import { genSalt, hash } from "bcrypt";
 const userSchema = mongoose.Schema(
   {
@@ -12,29 +12,30 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    address: {
-      type: String,
-      required: true,
-    },
-    number: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    pincode: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
+    
     password: {
       type: String,
       required: [true, "Password is Required"],
+    },
+    address: {
+      type: String,
+      // required: true,
+    },
+    number: {
+      type: String,
+      // required: true,
+    },
+    city: {
+      type: String,
+      // required: true,
+    },
+    pincode: {
+      type: String,
+      // required: true,
+    },
+    country: {
+      type: String,
+      // required: true,
     },
     orders:[
       {
