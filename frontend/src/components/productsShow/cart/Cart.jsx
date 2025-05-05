@@ -5,14 +5,14 @@ import apiClient from '../../../library/api_client';
 import {useNavigate} from 'react-router-dom';
 import { PLACED_ITEM_ROUTES } from '../../../util/constants';
 import Preloader from '../../Preloader/Preloader';
+import OrderViewContext from '../../../context/OrderViewContext/OrderviewContext';
 function Cart() {
     const navigate = useNavigate();
     const { cartItem, setCartItem } = useContext(CartContext)
+    const {OrderList, setOrderList} = useContext(OrderViewContext);
     const { totalPrice, settotalprice } = useContext(totalPriceContext);
     const[message, showMessage] = useState(false);
     const[stop, setstop] = useState(true);
-
-
     const removeItem = (index) => {
         if(totalPrice>0){
             settotalprice(totalPrice - parseInt(cartItem[index].price))
@@ -27,9 +27,9 @@ function Cart() {
                 productsharsh: cartItem,
             }, {withCredentials:true})
             
-
             if(response.status===200)
             {
+                setOrderList(response.data.orders)
                 showMessage(true);
                 setstop(false);
                 setTimeout(()=>
@@ -38,10 +38,11 @@ function Cart() {
                 },4000)
                 setCartItem([]);
                 settotalprice(0);
-
             }
         }catch(err)
         {
+            
+            navigate("/auth/signup");
             console.error("Order failed");
             
         }

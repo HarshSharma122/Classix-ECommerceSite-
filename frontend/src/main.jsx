@@ -15,6 +15,7 @@ import ProductShow from './components/productsShow/ProductShow.jsx'
 import CartContextProvider from './context/CartContextProvider.jsx'
 import Cart from './components/productsShow/cart/Cart.jsx'
 import TotalPriceProvider from './context/totalpriceContext/totalPriceProvider.jsx'
+import OrderViewContextProvider from './context/OrderViewContext/OrderViewContextProvider.jsx'
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useAppStore();
 
@@ -89,7 +90,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <CartContextProvider>
     <TotalPriceProvider>
-      <RouterProvider router={router} />
+      <OrderViewContextProvider>
+
+        <RouterProvider router={router} />
+      </OrderViewContextProvider>
 
     </TotalPriceProvider>
   </CartContextProvider>
